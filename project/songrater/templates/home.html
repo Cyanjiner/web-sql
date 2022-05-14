@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Music-db</title>
+  </head>
+  <body>
+    <h2>Registration</h2>
+
+    <form method="POST" action="">
+      {% csrf_token %} Username:
+      <input type="text" name="username-register" placeholder="" /><br />
+      Password: <input type="text" name="password" placeholder="" /><br />
+      <input type="submit" name="register" value="Register" />
+    </form>
+    {{ message }}
+
+    <h2>Retrieve songs by username</h2>
+    <form method="POST" action="">
+      {% csrf_token %} Username:
+      <input type="text" name="username-songs" id="username-songs" /><br />
+      <input type="submit" name="retrieve" value="Retrieve" />
+    </form>
+    {%if ratings_error%} {{ratings_error}} {%else%}
+    <div>
+      {% for r in ratings%}
+      <li>{{r.song_id}} -> {{r.rating}}</li>
+      {% endfor %}
+    </div>
+    {%endif%}
+
+    <h2>Retrieve Albums by an Artist</h2>
+    <form method="POST" action="">
+      {% csrf_token %} Artist:
+      <input type="text" name="artist-name" /><br />
+      <input
+        type="submit"
+        name="retrieve-by-artist"
+        value="retrieve-by-artist"
+      />
+    </form>
+    {%if albums_error%} {{albums_error}} {%else%}
+    <div>
+      {{artist}} {% for a in albums%}
+      <li>{{a.title}} -> {{a.number_of_songs}}</li>
+      {% endfor %}
+    </div>
+    {%endif%}
+  </body>
+</html>
